@@ -40,10 +40,11 @@ function generarPaleta() {
     $paleta.append(color);
   }
 }
+
 function grillaDePixeles(){
   for (var i=0; i<1749; i++){
     var pixel = $('<div>').addClass('pixel');
-    $grillaPixeles.append(pixel); 
+    $grillaPixeles.append(pixel);
   }
 }
 
@@ -58,15 +59,53 @@ $grillaPixeles.click(function(e){
 
 var apretado = false;
 
-$(e.target).mousedown(function(){
-  apretado = true;
+$grillaPixeles.mousedown(function(){
+  apretado = true; 
 })
 
-$(e.target).mouseup(function(){
+$grillaPixeles.mouseover(function(e){
+  if (apretado == true){
+    $(e.target).css('backgroundColor', $('#indicador-de-color').css('backgroundColor')); 
+  }
+})  
+
+$grillaPixeles.mouseup(function(){
   apretado = false;
 })
+
+$("#guardar").click(function (){
+  guardarPixelArt();
+})
+
+$(".imgs").click(function(e){
+  //No sale, no se porque
+  var imagen = e.target.id;
+  cargarSuperheroe(imagen);
+
+  switch (e.target.id){
+        case "batman":
+          cargarSuperheroe(batman);
+          break;
+        case "wonder":
+          cargarSuperheroe(wonder);
+          break;
+        case "flash":
+          cargarSuperheroe(flash);
+          break;
+        case "invisible":
+          cargarSuperheroe(invisible);
+          break;
+        }
+});
+
+$("#borrar").click(function(){
+  $('#grilla-pixeles').children().animate({"background-color": "white"}, 900);
+});
 
 $(document).ready(function(){
 generarPaleta();
 grillaDePixeles();
+  $("body").hide();
+  $("body").fadeIn(1000);
 })
+  
